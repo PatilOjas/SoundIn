@@ -1,8 +1,14 @@
 import React from "react";
 import Playlists  from "./Playlists";
+import {ReactComponent as PlayIcon} from '../svgs/play.svg'
 
 const Categories = () => {
 	const dataCategories = [
+		{
+			id: 0,
+			name: 'Liked Songs',
+			tagline: 'Music that suits you',
+		},
 		{
 			id: 1,
 			name: 'Focus',
@@ -25,9 +31,9 @@ const Categories = () => {
 		},
 	]
 	return(
-		<div>
-			{dataCategories.map((category) => (
-				<div className="cardsWrap">
+		<div className="mainInner">
+			{dataCategories.map((category, id) => (
+				<div className="cardsWrap" key={id}>
 					<h2>{category.name}</h2>
 					<p className="subText">{category.tagline}</p>
 					<Playlists category_id = {category.id}/>

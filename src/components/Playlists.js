@@ -1,8 +1,17 @@
 import React from "react";
 import {ReactComponent as PlayIcon} from '../svgs/play.svg'
+import { Link } from "react-router-dom";
 
 const Playlists = (props) => {
 	const dataPlaylists = [
+		{
+			id: 100,
+			category_id: 0,
+			name: 'Liked Songs',
+			img: "https://images.unsplash.com/photo-1499946981954-e7f4b234d7fa?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80",
+			desc: 'Lorem ipsum delor vas...',
+			
+		},
 		{
 			id: 101,
 			category_id: 1,
@@ -55,24 +64,26 @@ const Playlists = (props) => {
 		},
 	]
 
-	const matchedPlaylists = dataPlaylists.filter(playlist => playlist.category_id === props.category_id)
+	const matchedPlaylists = dataPlaylists.filter(playlist => playlist.category_id === props.category_id).slice(0, props.limiter)
 
 	return (
 		<div>
 			<div className="cardsWrapInner">
-				{matchedPlaylists.map((playlist) => (
-					<div className="card">
-					<div className="cardImage">
-						<img src={playlist.img} alt="Pic 1"/>
-					</div>
-					<div className="cardContent">
-						<h3>{playlist.name}</h3>
-						<span>{playlist.desc}</span>
-					</div>
-					<span className="playIcon">
-						<PlayIcon />
-					</span>
-				</div>
+				{matchedPlaylists.map((playlist, id) => (
+					<Link to={`/playlist/` + playlist.id}>
+						<div className="card" key={id} >
+							<div className="cardImage">
+								<img src={playlist.img} alt="Pic 1"/>
+							</div>
+							<div className="cardContent">
+								<h3>{playlist.name}</h3>
+								<span>{playlist.desc}</span>
+							</div>
+							<span className="playIcon">
+								<PlayIcon />
+							</span>
+						</div>
+					</Link>
 				))}
 			</div>
 		</div>
