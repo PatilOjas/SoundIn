@@ -1,7 +1,7 @@
-import logo from './logo.svg';
 import './App.scss';
 import Nav from './components/Nav'
 import Main from './components/Main' 
+import AudioControls from './components/AudioControls'
 
 
 function App() {
@@ -11,7 +11,9 @@ function App() {
 			<Nav />
 			<Main />
 		</div>
-		<div className="musicControls">music controls</div>
+		<div className="musicControls">
+			<AudioControls />
+		</div>
 	</div>
   );
 }

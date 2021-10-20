@@ -104,7 +104,7 @@ $greenMain: #1db954;
 .musicControls{
 	background: $greyLighter;
 	text-align: center;
-	height: 90px;
+	height: 150px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -367,4 +367,142 @@ ul.songList{
 			}
 		}
 	}
+}
+
+.control-container{
+	width: 100vw;
+	display: flex;
+	justify-items: center;
+	align-items: center;
+	.album-art{
+		margin: auto 2rem;
+		img{
+			display: inline;
+			object-fit: cover;
+			max-height: 7rem;
+			min-width: 7rem;
+		}
+	}
+	.main-comp{
+		display: flex;
+		flex-direction: column;
+		.details{
+			display: flex;
+			width: 60vw;
+			margin-left: 5em;
+			justify-content: space-between;
+			.track-name{
+				display: inline;
+				margin-left: 4rem;
+			}
+			.track-artist{
+				display: inline;
+				margin-right: 0;
+				margin-right: 4rem;
+				color: $greyText;
+				font-size: 80%;
+			}
+		}
+		.slider-container{
+			display: flex;
+			margin-left: 5rem;
+			// width: 100vw;
+			.seek_slider{
+				margin: 0.5rem 1.5rem;
+				width: 50vw;
+			}
+		}
+		.buttons{
+			display: flex;
+			width: 60vw;
+			justify-content: center;
+			margin-left: 5rem;
+			.playpause-track{
+				color: $greenMain;
+				margin: auto 3rem;
+				background-color: white;
+				border-radius: 80%;
+				&:hover{
+					cursor: pointer;
+				}
+				&:active{
+					background-color: $greyLighter;
+				}
+			}
+			.prev-track,.next-track{
+				margin-top: 0.5rem;
+			}
+		}
+	}
+	
+}
+
+.library-container{
+	display: flex;
+	margin: 5rem;
+	flex-direction: column;
+	line-height: 4rem;
+	.input-ordinary{
+		border: none;
+		border-bottom: 2px white solid;
+		background-color: transparent;
+		color: white;
+		outline: none;
+		font-weight: 400;
+		font-size: 1rem;
+	}
+	.input-desc{
+		border: none;
+		border: 2px solid white;
+		background-color: transparent;
+		color: white;
+		font-weight: 400;
+		font-size: 1rem;
+		outline: none;
+		height: 8rem;
+		width: 40rem;
+	}
+
+	.dest1{
+		margin-left: 5rem;
+	}
+	
+	.dest2{
+		margin-left: 8.3rem;
+	}
+	
+	.dest3{
+		margin-left: 7.8rem;
+	}
+
+	.upload-btn{
+		display: inline-block;
+		background-color: $greenMain;
+		height: 2rem;
+		width: 5rem;
+		font-size: 1rem;
+		font-weight: 600;
+		border-radius: 1.5rem;
+		outline: none;
+	}
+}
+
+.library-addsong-btn{
+	color: white;
+	text-decoration: none;
+	
+	.btn{
+		display: inline-block;
+		padding: 0.2rem 3rem ;
+		margin-left: 5rem;
+		background-color: $greenMain;
+		color: black;
+		border-radius: 1.5rem;
+	}
+}
+
+.Link-decor{
+	color: white;
+	text-decoration: none;
+
 }

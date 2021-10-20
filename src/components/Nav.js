@@ -1,7 +1,6 @@
 import React from "react";
 import {ReactComponent as HomeIcon} from '../svgs/home.svg'
 import {ReactComponent as LibraryIcon} from '../svgs/library.svg'
-import {ReactComponent as SearchIcon} from '../svgs/search.svg'
 import { Link } from "react-router-dom";
 import Logo from './logo.png'
 
@@ -19,13 +18,13 @@ const Nav = () => {
 					Home
 				</li>
 				</Link>
-				<Link to="/search">
+				<Link to="/concert">
 				<li >
-					<SearchIcon />
-					Search
+					<i class="fas fa-microphone-alt fa-2x"></i>
+					Concert
 				</li>
 				</Link>
-				<Link to="/your-library">
+				<Link to="/library">
 				<li >
 					<LibraryIcon />
 					Your Library	

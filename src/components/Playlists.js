@@ -70,7 +70,7 @@ const Playlists = (props) => {
 		<div>
 			<div className="cardsWrapInner">
 				{matchedPlaylists.map((playlist, id) => (
-					<Link to={`/playlist/` + playlist.id}>
+					<Link to={`/playlist/` + playlist.id}  className="Link-decor">
 						<div className="card" key={id} >
 							<div className="cardImage">
 								<img src={playlist.img} alt="Pic 1"/>
