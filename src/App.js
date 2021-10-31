@@ -2,6 +2,7 @@ import './App.scss';
 import Nav from './components/Nav'
 import Main from './components/Main' 
 import AudioControls from './components/AudioControls'
+import Login from './components/Login';
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
 			<AudioControls />
 		</div>
 	</div>
+	// <Login />
   );
 }
 
