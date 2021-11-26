@@ -303,8 +303,19 @@ def playlistPage(request, playlist, uid):
 																client_secret='56dbc2d4765941c0b553f1ea3fc3b9f2'))
 		results = spotify.artist_top_tracks(uri)
 		fresults = results['tracks'][:10]
+	
+	if playlist == 'Your Talent Playlist':
+		query = Song.objects.all()
+		fresults = []
+		data['mylibrary'] = list(query.values())
+		for _ in data['mylibrary']:
+			uSong = {}
+			uSong['name'] = _['song_name']
+			uSong['album'] = {}
+			uSong['album']['images'] = [{'url': "/../static/images/logo.png"}]
+			uSong['preview_url'] = '/../media/' + str(_['song_file'])
+			fresults.append(uSong)
 
-	global current_user_id
 	try:
 		q = User.objects.filter(id=uid)[0]
 		user = {'name': q.username}
@@ -348,21 +359,7 @@ def login(request):
 	id = -1
 	if request.method == "GET /auth_accounts/google/login/callback/":
 		print(request)
-	# if request.method == 'GET':
-	# 	print(request.GET)
-	# 	gauth = SocialAccount.objects.all()
-	# 	eMail = gauth[len(gauth)-1].extra_data['email']
-	# 	name = gauth[len(gauth)-1].extra_data['name']
-	# 	u = User(name=name, email=eMail)
-	# 	u.save()
-	# 	try:
-	# 		query = User.objects.filter(email__startswith=eMail)[0]
-	# 		current_user_id = query.user_id
-	# 		print('GAuth current_user_id', current_user_id)
-	# 		return redirect('categories/')
-	# 	except:
-	# 		return redirect('/')
-
+	
 
 	if request.method == 'POST':
 		email = request.POST['email']
@@ -419,19 +416,4 @@ def redirector(request):
 	uid = q1.id
 	print(q1)
 	return redirect(reverse('categories', kwargs={'uid': uid}))
-# def gAuth(request):
-# 	flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
-#     'client_secret.json',
-#     scopes=['https://www.googleapis.com/auth/drive.metadata.readonly'])
-# 	flow.redirect_uri = "http://127.0.0.1:8000/accounts/google/login/callback/"
-# 	authorization_url, state = flow.authorization_url(
-#     access_type='offline',
-# 	prompt='select_account',
-#     include_granted_scopes='true')
-# 	credentials = flow.credentials.fetch_token()
-# 	requests.post('https://oauth2.googleapis.com/revoke',
-#     params={'token': credentials.token},
-#     headers = {'content-type': 'application/x-www-form-urlencoded'})
-# 	return redirect(authorization_url)
-
 	
