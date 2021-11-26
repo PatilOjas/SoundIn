@@ -1,0 +1,111 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<div class="playlistPage">
+	<div class="mainInner">
+		<div class="playlistPageInfo">
+			<div class="playlistPageImage">
+				<img src="https://images.unsplash.com/photo-1499946981954-e7f4b234d7fa?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80"
+					alt="pic" />
+			</div>
+			<div class="playlistPageContent">
+				<!-- <p class="smallText uppercase bold">{{ playlist }}</p> -->
+				<h1>{{ playlist }}</h1>
+				<p class="tagline">Minimalism, electronica and modern classical to concentrate</p>
+				<div class="playlistPageDesc">
+					<p class="soundin">SoundIn</p>
+					<span>4hr 35min</span>
+					<span>699,428 likes</span>
+				</div>
+			</div>
+			<div class="playlistPageSongs">
+				<div class="playlistButtons">
+					<span class="playIcon">
+						<svg role="img" height="16" width="16" viewBox="0 0 16 16" class="Svg-sc-1bi12j5-0 gSLhUO">
+							<path d="M4.018 14L14.41 8 4.018 2z"></path>
+						</svg>
+					</span>
+					<div class="icons">
+						<div class="icon iconsHeart">
+							<svg role="img" height="32" width="32" viewBox="0 0 32 32" class="Svg-sc-1bi12j5-0 gSLhUO">
+								<path
+									d="M27.672 5.573a7.904 7.904 0 00-10.697-.489c-.004.003-.425.35-.975.35-.564 0-.965-.341-.979-.354a7.904 7.904 0 00-10.693.493A7.896 7.896 0 002 11.192c0 2.123.827 4.118 2.301 5.59l9.266 10.848a3.196 3.196 0 004.866 0l9.239-10.819A7.892 7.892 0 0030 11.192a7.896 7.896 0 00-2.328-5.619zm-.734 10.56l-9.266 10.848c-.837.979-2.508.979-3.346 0L5.035 16.104A6.9 6.9 0 013 11.192 6.9 6.9 0 015.035 6.28a6.935 6.935 0 014.913-2.048 6.89 6.89 0 014.419 1.605A2.58 2.58 0 0016 6.434c.914 0 1.555-.53 1.619-.585a6.908 6.908 0 019.346.431C28.277 7.593 29 9.337 29 11.192s-.723 3.6-2.062 4.941z">
+								</path>
+							</svg>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{% if results %}
+		<ul class="songList" id="test" >
+		{% for x in results %}
+		
+			<li>
+				<div class="songIcon">
+					<!-- <img src="{{x.album.images.0.url}}"> -->
+				</div>
+				
+				<div class="songDetails">
+					<div class="songTime">
+						<button id="playbtn" style="background-color: #131313; border: none;" onclick='fetcher("{{ forloop.counter0 }}")'><svg height="16" width="16" fill="#282828"><path fill="white" d="M4.018 14L14.41 8 4.018 2z"></path></svg>
+						</button>
+						<!-- <button id="playbtn" onclick='fetcher("{{ forloop.counter0 }}")'> Play </button> -->
+						<h3 style="display: inline-block; margin-left: 2rem;">{{ x.name }}</h3>
+					</div>
+					
+				</div>
+				
+			</li>
+		
+		<hr>
+		{% endfor %}
+	</ul>
+		{% endif %}
+	</div>
+</div>
+<script>
+	let logs = `{{ results|safe }}`.replaceAll('True', 'true');
+	logs = logs.replaceAll('False', 'false');
+	logs = logs.replaceAll(`'`, `"`)
+	console.log(logs)
+	logs = JSON.parse(logs)
+	let value = 0
+	// console.log(logs)
+	let x = "{% static 'music/a.mp3' %}"
+	function fetcher(val) {
+		x = logs[val].preview_url
+		value = val
+		let container = document.getElementById("audio-source");
+		container.src = x;
+		console.log(container)
+		document.getElementById("albm-art").src = logs[val].album.images[0].url
+		document.getElementById("trackName").innerHTML = logs[val].name 
+		toggleAudio()
+	}
+
+	function next(){
+		let l = logs.length
+		value = (value + 1) % l;
+		let container = document.getElementById("audio-source");
+		container.src = logs[value].preview_url;
+		document.getElementById("albm-art").src = logs[value].album.images[0].url
+		document.getElementById("trackName").innerHTML = logs[value].name 
+		console.log(container)
+		toggleAudio();
+	}	
+	
+	function prev(){
+		let l = logs.length
+		value = (value - 1 + l) % l;
+		let container = document.getElementById("audio-source");
+		container.src = logs[value].preview_url;
+		document.getElementById("albm-art").src = logs[value].album.images[0].url
+		document.getElementById("trackName").innerHTML = logs[value].name 
+		console.log(container)
+		toggleAudio();
+	}	
+</script>
+{% endblock content %}

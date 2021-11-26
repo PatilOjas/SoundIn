@@ -1,0 +1,81 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<div class="library-addsong-btn">
+    <!-- <Link to="addsong" class="library-addsong-btn" >-->
+	<a href="/addsong/{{ uid }}" class="btn" style="text-decoration: none;"><h1>Add Your own Song</h1></a>
+</div>
+<div class="my-library">
+	<ul class="songList">
+		{% for song in mylibrary %}
+			<li>
+				<div class="songIcon"></div>
+					<div class="songIcon">
+						<!-- <a href="http://127.0.0.1:8000/media/{{song.song_file}}"> <button onclick='fetcher("{{ forloop.counter0 }}")'> Play </button> </a> -->
+						
+						<button id="playbtn" style="background-color: #131313; border: none;" onclick='fetcher("{{ forloop.counter0 }}")'><svg height="16" width="16" fill="#282828"><path fill="white" d="M4.018 14L14.41 8 4.018 2z"></path></svg>
+						</button>
+					</div>
+					<div class="songDetails">
+						<h3 style="color: white; text-decoration: none;">{{ song.song_name }}</h3>
+						<span style="text-decoration: none;">{{ song.song_singer }}</span>
+					</div>
+					<div class="songTime" style="margin-right: 1.5rem;">
+						<!-- <span style="color: white; text-decoration: none;">{{ song.song_id }}</span> -->
+					</div>
+					<div class="delete-btn">
+						<form action="{% url 'song-delete' uid song.song_id %}" method="post">
+							{% csrf_token %}
+						<button type="submit" style="background-color: red; font-size: 1rem; font-weight: 400; padding: 5px;">DELETE</button>
+						</form>
+					</div>
+			</li>
+		{% endfor %}
+	</ul>
+</div>
+<script>
+	var logs = `{{ mylibrary|safe }}`.replaceAll('True', 'true');
+	logs = logs.replaceAll('False', 'false');
+	logs = logs.replaceAll(`'`, `"`)
+	logs = JSON.parse(logs)
+	// console.log(logs)
+	var value = 0
+	// console.log(logs)
+	var x = "{% static 'music/a.mp3' %}"
+	function fetcher(val) {
+		console.log(val)
+		x = logs[val].song_file;
+		console.log(x)
+		value = val
+		let container = document.getElementById("audio-source");
+		container.src = x;
+		console.log(container)
+		document.getElementById("albm-art").src = "{% static 'images/logo.png' %}"
+		document.getElementById("trackName").innerHTML = logs[val].song_name 
+		toggleAudio()
+	}
+
+	function next(){
+		let l = logs.length
+		value = (value + 1) % l;
+		let container = document.getElementById("audio-source");
+		container.src = concat("http://127.0.0.1:8000/media/{{song.song_file}}", logs[value].song_file);
+		document.getElementById("albm-art").src = logs[value].album.images[0].url
+		document.getElementById("trackName").innerHTML = logs[value].song_name 
+		console.log(container)
+		toggleAudio();
+	}
+
+	function prev(){
+		let l = logs.length
+		value = (value - 1 + l) % l;
+		let container = document.getElementById("audio-source");
+		container.src = concat("http://127.0.0.1:8000/media/{{song.song_file}}", logs[value].song_file);
+		document.getElementById("albm-art").src = logs[value].album.images[0].url
+		document.getElementById("trackName").innerHTML = logs[value].song_name 
+		console.log(container)
+		toggleAudio();
+	}
+</script>
+{% endblock content %}

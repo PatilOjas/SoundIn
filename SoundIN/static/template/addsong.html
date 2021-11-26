@@ -1,0 +1,27 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<div class="library-container">
+    <form action="" method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+        <!--<label for="username">Your user id is:</label>
+        <input type="text" id="username" name="user_id" value="{{user.user_id}}"/>-->
+        <label for="file">Attach your audio file:</label>
+        <input type="file" name="song_file" id="file" class="fineUpload dest1"/>
+        <br />
+
+        <label for="songName">Name of song:</label>
+        <input type="text" name="song_name" id="songName" class="input-ordinary dest2" />
+        <br />
+        <label for="singerName">Name of singer:</label>
+        <input type="text" name="song_singer" id="singerName" class="input-ordinary dest3" />
+        <br />
+        <label for="songDesc">Description of song:</label>
+        <br />
+        <textarea name="song_desc" id="songDesc" cols="30" rows="10" class="input-desc"></textarea>
+        <br />
+        <button type="submit" value="Upload" class="upload-btn" >UPLOAD </button>
+    </form>
+</div>
+{% endblock content %}

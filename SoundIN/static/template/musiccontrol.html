@@ -1,0 +1,75 @@
+{% load static %}
+<div class="musicControls">
+	<div class="control-container">
+		<div class="album-art">
+			<img src="https://images.unsplash.com/photo-1613390067790-4d9e73445a7f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=387&q=80"
+				alt="album art" id="albm-art"/>
+		</div>
+		<div class="main-comp">
+			<div class="details">
+				<div class="track-name" id="trackName">SoundIn</div>
+				<!-- <div class="track-artist">Ojas Patil</div> -->
+			</div>
+
+			<div class="slider-container">
+				<audio src="{% static 'music/a.mp3' %}" class="seek_slider" id="audio-source"></audio>
+			</div>
+
+			<input type="range" class="timeline" max="100" value="0" style="display: block;">
+			<div class="buttons">
+				<div class="prev-track" onclick="prev()">
+					<i class="fa fa-step-backward fa-2x"></i>
+				</div>
+				<div class="playpause-track" onclick="">
+					<!-- <i class="fa fa-play-circle fa-3x"></i> -->
+					<button >
+						<svg  height="32" width="32" viewBox="0 0 16 16" class="play-btn"><path fill="white" d="M4.018 14L14.41 8 4.018 2z"></path></svg>
+					</button>
+				</div>
+				<div class="next-track" onclick="next()">
+					<i class="fa fa-step-forward fa-2x"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	const playerButton = document.querySelector('.playpause-track'),
+		audio = document.querySelector('audio'),
+		playIcon = `
+		<svg  height="32" width="32" viewBox="0 0 16 16" class="play-btn"><path fill="white" d="M4.018 14L14.41 8 4.018 2z"></path></svg>
+      `,
+		pauseIcon = `
+        <svg height="32" width="32" viewBox="0 0 16 16" class="play-btn"><path fill="white" d="M3 2h3v12H3zm7 0h3v12h-3z"></path></svg>
+      `;
+	function toggleAudio() {
+		if (audio.paused) {
+			audio.play();
+			playerButton.innerHTML = pauseIcon;
+		} else {
+			audio.pause();
+			playerButton.innerHTML = playIcon;
+		}
+	}
+	playerButton.addEventListener('click', toggleAudio);
+	function audioEnded() {
+		playerButton.innerHTML = playIcon;
+	}
+
+	audio.onended = audioEnded;
+	const timeline = document.querySelector('.timeline');
+	function changeTimelinePosition() {
+		const percentagePosition = (100 * audio.currentTime) / audio.duration;
+		timeline.style.backgroundSize = `${percentagePosition}% 100%`;
+		timeline.value = percentagePosition;
+	}
+
+	audio.ontimeupdate = changeTimelinePosition;
+	function changeSeek() {
+		const time = (timeline.value * audio.duration) / 100;
+		audio.currentTime = time;
+	}
+
+	timeline.addEventListener('change', changeSeek);
+
+</script>

@@ -1,0 +1,35 @@
+{% load static %}
+{% with track="" name="" img=""%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+	<link rel="stylesheet" href="{% static 'css/app.css' %}">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="theme-color" content="#000000" />
+	<title>SoundIn</title>
+</head>
+
+<body>
+	<div class="outerWrap">
+		<div class="App">
+			{% include 'navbar.html' %}
+			<div class="main">
+				<div class="upperNav" style="display: flex;">
+					<p class="welcome-tag">Welcome, {{ user.name }} </p>
+					<a href="{% url 'logout' %}"><button class="logout-btn" type="submit">Log Out</button></a>
+				</div>
+				<div class="mainContent">
+					{% block content %}
+
+					{% endblock content %}
+				</div>
+			</div>
+		</div>
+			{% include 'musiccontrol.html' with title=user %}
+	</div>
+</body>
+</html>
+{% endwith %}

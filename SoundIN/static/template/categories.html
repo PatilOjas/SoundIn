@@ -1,0 +1,35 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+<div class="mainInner">
+	{% for category in dataCategories %}
+    <div class="cardsWrap">
+      <h2>{{category.category}}</h2>
+      <p className="subText">{{category.tagline}}</p>
+	  <div style="display: inline-flex; flex-direction: row; flex-wrap: wrap;">
+	  {% for subcat in category.subcat %}
+		<div class="cardsWrapInner">
+			<!-- <Link to={`/playlist/` + playlist.id}  class="Link-decor"> -->
+
+					<a href="/playlistpage/{{ uid }}/{{subcat.name}}" class="card" >
+					<!-- <a href="http://127.0.0.1:8000/playlistpage/?playlist={{category.tagline}}"> -->
+						<div class="cardImage">
+							<img src={{subcat.img}} alt="Pic"/>
+						</div>
+						<div class="cardContent">
+							<h3>{{subcat.name}}</h3>
+							<span>{{subcat.desc}}</span>
+						</div>
+						<span class="playIcon">
+							<svg role="img" height="16" width="16" viewBox="0 0 16 16" class="Svg-sc-1bi12j5-0 gSLhUO"><path d="M4.018 14L14.41 8 4.018 2z"></path></svg>
+						</span>
+					</a>
+			<!-- ))} -->
+		</div>
+	  {% endfor %}
+	</div>
+    </div>
+	{% endfor %}
+</div>
+{% endblock content %}
+
